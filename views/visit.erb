@@ -1,0 +1,34 @@
+<h2>Visit</h2>
+
+<form action="/visit" method="post">
+
+  <div class="form-group">
+    <label for="exampleInputText">Your name</label>
+    <input type="text" name="username" class="form-control" id="exampleInputText" placeholder="Enter your name here" value="<%= @user_name %>">
+  </div>
+
+
+  <div class="form-group">
+    <label for="exampleInputText3">Phone number</label>
+    <input type="phone" name="userphone" class="form-control" id="exampleInputText3" placeholder="Enter your phone number" value="<%= @user_phone %>">
+  </div>
+
+
+  <div class="form-group">
+    <label for="exampleInputText2">Date to Visit</label>
+    <input type="date" name="userdate" class="form-control" id="exampleInputText2" placeholder="Select date please" value="<%= @user_date %>">
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputText4">Barber name</label>
+    <select class="form-control" name="barbername">
+      <option value="1">Roberto Santana</option>
+      <option value="2">Jessie Pinkman</option>
+      <option value=3">Orieiro Marnielli</option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+<%= @message %>
