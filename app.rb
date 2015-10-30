@@ -4,12 +4,14 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'sqlite3'
 
-configure do
-  db = get_db
-end
-
 def get_db
   return SQLite3::Database.new  "barber.sqlite"
+end
+
+
+configure do
+  db = get_db
+
 end
 
 
@@ -24,6 +26,18 @@ end
 
 get '/visit' do
   erb :visit
+end
+
+get '/showusers' do
+
+  db = get_db
+  db.results_as_hash = true
+  db.execute "select * from 'Visits'" do |data|
+    @username = data['Name']
+    @phone = data['Phone']
+    @date = data['Date']
+    end
+  erb :showusers
 end
 
 post '/visit' do
