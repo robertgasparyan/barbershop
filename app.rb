@@ -4,6 +4,15 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'sqlite3'
 
+configure do
+  db = get_db
+end
+
+def get_db
+  return SQLite3::Database.new  "barber.sqlite"
+end
+
+
 get '/' do
 	erb "Hello World of Mine! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"
 end
@@ -35,8 +44,8 @@ post '/visit' do
     erb :visit
     else
 
-    db = SQLite3::Database.new  "barber.sqlite"
-    db.execute "insert into 'Visits' (Name,Phone,Date) values ('#{@user_name}','#{@user_phone}','#{@user_date}')";
+    db = get_db
+    db.execute "insert into 'Visits' (Name,Phone,Date) values (?,?,?)", [@user_name, @user_phone, @user_date];
 
     combined_data = "#{@user_name} - #{@user_phone} - #{@user_date} - #{@barbername}\n\n"
 
@@ -62,3 +71,4 @@ end
 get '/thankyou' do
   erb :thankyou
 end
+
