@@ -14,7 +14,6 @@ configure do
 
 end
 
-
 get '/' do
 	erb "Hello World of Mine! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"
 end
@@ -32,11 +31,7 @@ get '/showusers' do
 
   db = get_db
   db.results_as_hash = true
-  db.execute "select * from 'Visits'" do |data|
-    @username = data['Name']
-    @phone = data['Phone']
-    @date = data['Date']
-    end
+  @results = db.execute "select * from 'Visits'"
   erb :showusers
 end
 

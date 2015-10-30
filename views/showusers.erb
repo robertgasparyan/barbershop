@@ -1,5 +1,14 @@
-<%= @username %>
-<br/>
-<%= @phone %>
-<br/>
-<%= @date %>
+<table class="table table-striped">
+  <tr>
+    <td>Name</td>
+    <td>Phone</td>
+    <td>Date</td>
+  </tr>
+  <% @results.each do |row| %>
+  <tr>
+    <td><%= row['Name'] %></td>
+    <td><%= row['Phone'] %></td>
+    <td><%= row['Date'] %></td>
+  </tr>
+   <% end %>
+</table>
