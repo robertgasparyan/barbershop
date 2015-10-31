@@ -8,7 +8,6 @@ def get_db
   return SQLite3::Database.new  "barber.sqlite"
 end
 
-
 configure do
   db = get_db
 
