@@ -8,10 +8,28 @@ def get_db
   return SQLite3::Database.new  "barber.sqlite"
 end
 
+def seed_db db, barbers
+  barbers.each do |barber|
+    if !is_barber_exists? db, barber
+      db.execute "insert into barbers (name) values (?)", [barber]
+    end
+  end
+end
+
+
+#is barber exists in functionality
+def is_barber_exists? db, name
+  db.execute("select * from Barbers where name=?", [name]).length > 0
+end
+#end of is_barber_exists function
+
 configure do
   db = get_db
 
+  seed_db db, ['Jon Michaels', 'Razbery Freeman', 'Morgan Johnson']
 end
+
+
 
 get '/' do
 	erb "Hello World of Mine! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"
@@ -23,6 +41,9 @@ get '/about' do
 end
 
 get '/visit' do
+  db = get_db
+  db.results_as_hash = true
+  @results = db.execute "select * from barbers";
   erb :visit
 end
 
@@ -53,7 +74,7 @@ post '/visit' do
     else
 
     db = get_db
-    db.execute "insert into 'Visits' (Name,Phone,Date) values (?,?,?)", [@user_name, @user_phone, @user_date];
+    db.execute "insert into 'Visits' (Name,Phone,Date,Barbername) values (?,?,?,?)", [@user_name, @user_phone, @user_date,@barbername];
 
     combined_data = "#{@user_name} - #{@user_phone} - #{@user_date} - #{@barbername}\n\n"
 
@@ -63,7 +84,6 @@ post '/visit' do
     end
 
   #prepare to sending emails
-
 
       @message = "Complete"
       erb :thankyou
