@@ -6,13 +6,13 @@
     <th><strong>Date</strong></th>
   </tr>
   </thead>
-  <% @results.each do |row| %>
   <tbody>
+  <% @results.each do |row| %>
   <tr>
     <td><%= row['Name'] %></td>
     <td><%= row['Phone'] %></td>
     <td><%= row['Date'] %></td>
   </tr>
-  </tbody>
    <% end %>
+  </tbody>
 </table>
